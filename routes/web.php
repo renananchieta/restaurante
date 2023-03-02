@@ -2,12 +2,22 @@
 
 use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PedidoItensController;
 use App\Http\Controllers\ProdutoController;
 use App\Models\Categoria;
+use App\Models\Cliente;
 use App\Models\Produto;
 use Illuminate\Support\Facades\Route;
+
+//CLIENTE
+Route::get('/clientes', [ClienteController::class, 'index']);
+Route::get('/cliente/create', [ClienteController::class, 'create']);
+Route::post('/cliente/store', [ClienteController::class, 'store']);
+Route::get('/cliente/{id}', [ClienteController::class, 'show']);
+Route::post('/cliente/update', [ClienteController::class, 'update']);
+//ENCERRAR CONTA DO CLIENTE:
 
 //CATEGORIAS
 Route::get('/categorias', [CategoriaController::class, 'index']);
@@ -19,14 +29,12 @@ Route::post('/categoria/delete', [CategoriaController::class, 'delete']);
 
 
 //PRODUTOS
-//LEMBRETE: CORRIGIR O 'EDITAR'
 Route::get('/produtos', [ProdutoController::class, 'index']);
 Route::get('/produto/create',[ProdutoController::class, 'create']);
 Route::post('/produto/store', [ProdutoController::class, 'store']);
 Route::get('/produto/{id}', [ProdutoController::class, 'show']);
 Route::post('/produto/update', [ProdutoController::class, 'update']);
 Route::post('/produto/delete', [ProdutoController::class, 'delete']);
-
 
 
 

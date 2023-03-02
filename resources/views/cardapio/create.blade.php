@@ -14,7 +14,7 @@
         <div class="mb-3">
             <label>Produto:</label>
             <select name="produto" class="form-select" required>
-                <option>Selecione...</option>
+                <option value="">Selecione...</option>
                 @foreach($produtos as $produto)
                 <option value="{{$produto->id}}">{{$produto->nome}}</option>
                 @endforeach

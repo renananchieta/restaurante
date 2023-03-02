@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cardapio;
+use App\Models\Cliente;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use Exception;
@@ -20,7 +21,7 @@ class PedidoController extends Controller
 
     public function create()
     {
-        //$cardapios = Cardapio::all();
+        $clientes = Cliente::all();
 
         $itensCardapio = DB::table("cardapio as c")
                             ->join("produto as p", "p.id", "=", "c.fk_produto")
@@ -32,16 +33,19 @@ class PedidoController extends Controller
                             ->orderBy('p.nome')
                             ->get();
 
-        return view('pedido.create', compact('itensCardapio'));
+        return view('pedido.create', compact('itensCardapio','clientes'));
     }
 
     public function store(Request $request)
     {
         try{
+
+
             $pedido = new Pedido();
             $pedido->data = date('Y-m-d');
             $pedido->mesa = $request->mesa;
             $pedido->status = $request->status;
+            $pedido->fk_identificacao_cliente = $request->identificacao;
             $pedido->save();
 
 

@@ -20,6 +20,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a class="nav-link active" href="{{url('clientes')}}">Clientes</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link active" href="{{url('categorias')}}">Categoria</a>
                     </li>
                     <li class="nav-item">

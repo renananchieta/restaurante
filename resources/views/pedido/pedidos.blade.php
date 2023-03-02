@@ -27,6 +27,7 @@
                 <th width="5%">ID</th>
                 <th>DATA</th>
                 <th>MESA</th>
+                <th>IDENTIFICAÇÃO</th>
                 <th>STATUS</th>
                 <th width="10%">AÇÃO</th>
             </tr>
@@ -37,6 +38,7 @@
                 <td>{{$pedido->id}}</td>
                 <td>{{$pedido->data}}</td>
                 <td>{{$pedido->mesa}}</td>
+                <td>{{$pedido->cliente()->first()->identificacao}}</td>
                 <td>{{$pedido->status}}</td>
                 <td>
                     <a href="{{url('pedido/detalhes')}}/{{$pedido->id}}" class="btn btn-primary">Visualizar</a>

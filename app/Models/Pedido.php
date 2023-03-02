@@ -22,4 +22,9 @@ class Pedido extends Model
     {
         return $this->hasMany(PedidoItem::class, 'fk_pedido');
     }
+
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class, 'id','fk_identificacao_cliente');
+    }
 }
