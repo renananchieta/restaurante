@@ -9,6 +9,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Produto;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
 
 //CLIENTE
@@ -17,7 +18,7 @@ Route::get('/cliente/create', [ClienteController::class, 'create']);
 Route::post('/cliente/store', [ClienteController::class, 'store']);
 Route::get('/cliente/{id}', [ClienteController::class, 'show']);
 Route::post('/cliente/update', [ClienteController::class, 'update']);
-//ENCERRAR CONTA DO CLIENTE:
+
 
 //CATEGORIAS
 Route::get('/categorias', [CategoriaController::class, 'index']);
@@ -56,3 +57,8 @@ Route::post('/pedido/update', [PedidoController::class, 'update']);
 Route::post('/pedido/cancelar', [PedidoController::class, 'cancelar']);
 Route::get('/pedido/detalhes/{id}', [PedidoController::class, 'visualizar']);
 Route::post('/pedido/detalhes/status/pronto', [PedidoController::class,'statusPedido']);
+
+
+//ENCERRAR CONTA DO CLIENTE:
+Route::get('/encerrarconta',[PedidoController::class,'encerrarConta']);
+Route::get('/encerrarconta/{identificacao}', [PedidoController::class, 'encerrarContaDetalhes']);

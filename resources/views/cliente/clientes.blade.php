@@ -6,13 +6,9 @@
 
 @section('conteudo')
 
-    <h1>
-        CLIENTES
-        <a href="{{url('cliente/encerrar')}}" class="btn btn-danger mt-2 " style="float: right;">Encerrar Conta</a>
-    </h1>
+    <h1>CLIENTES</h1>
 
     <a href="{{url('cliente/create')}}" class="btn btn-primary mb-2">Cadastrar</a>
-    
 
     @if(session('mensagem'))
         <div class="alert alert-success">

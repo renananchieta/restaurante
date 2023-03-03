@@ -38,7 +38,7 @@
                 <td>{{$pedido->id}}</td>
                 <td>{{$pedido->data}}</td>
                 <td>{{$pedido->mesa}}</td>
-                <td>{{$pedido->cliente()->first()->identificacao}}</td>
+                <td>{{$pedido->cliente->identificacao}}</td>
                 <td>{{$pedido->status}}</td>
                 <td>
                     <a href="{{url('pedido/detalhes')}}/{{$pedido->id}}" class="btn btn-primary">Visualizar</a>

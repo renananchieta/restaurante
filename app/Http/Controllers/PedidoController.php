@@ -16,6 +16,7 @@ class PedidoController extends Controller
     public function index()
     {
         $pedidos = Pedido::all();
+
         return view('pedido.pedidos', compact('pedidos'));
     }
 
@@ -44,8 +45,9 @@ class PedidoController extends Controller
             $pedido = new Pedido();
             $pedido->data = date('Y-m-d');
             $pedido->mesa = $request->mesa;
-            $pedido->status = $request->status;
-            $pedido->fk_identificacao_cliente = $request->identificacao;
+            $pedido->status = 'PENDENTE'; //pendente
+            $pedido->identificacao_cliente = $request->identificacao;
+            $pedido->created_at = date('Y-m-d H:i:s');
             $pedido->save();
 
 
@@ -122,5 +124,35 @@ class PedidoController extends Controller
         $pedido->save();
 
         return redirect('pedidos')->with('mensagem','Pedido PRONTO');
+    }
+
+    public function encerrarConta()
+    {
+        $cliente = Cliente::all();
+
+        return view('pedido.encerrarconta', compact('cliente'));
+    }
+
+    public function encerrarContaDetalhes($identificacao)
+    {
+        $cliente = Cliente::where('identificacao', $identificacao)->first();
+
+        $itensDoPedido = DB::table("pedido_itens as pi")
+                            ->join("pedido as pe", "pe.id","=","pi.fk_pedido")
+                            ->join("cardapio as c","c.id","=", "pi.fk_cardapio")
+                            ->join("produto as p", "p.id","=", "c.fk_produto")
+                            ->join("cliente as cl","cl.identificacao","=","pe.identificacao_cliente")
+                            ->where("pe.identificacao_cliente","=", $identificacao)
+                            ->select([
+                                'pe.id as id_pedido',
+                                DB::raw("UPPER(p.nome) as produto"),
+                                'pi.quantidade as qtd',
+                                'c.valor as valor',
+                                'pe.created_at as data'
+                            ])
+                            ->orderBy('p.nome')
+                            ->get();
+
+        return view('pedido.encerrarcontaitens', compact('itensDoPedido', 'cliente'));
     }
 }

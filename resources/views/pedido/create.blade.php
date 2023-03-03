@@ -18,21 +18,7 @@ INICIAR PEDIDO
         </div>
         <div class="col-2">
             <label>Identificação:</label>
-            <select name="identificacao" class="form-select">
-                <option value="">Selecione...</option>
-                <!-- INSERIR O NÚMERO DE IDENTIFICAÇÃO -->
-                @foreach($clientes as $cliente)
-                    <option value="{{$cliente->id}}">{{$cliente->identificacao}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-2 ">
-            <label>Status:</label>
-            <select name="status" class="form-select">
-                <option value="PENDENTE">PENDENTE</option>
-                <option value="PRONTO">PRONTO</option>
-                <option value="CANCELADO">CANCELADO</option>
-            </select>
+            <input type="text" name="identificacao" class="form-control" />
         </div>
     </div>
     <div class="row mb-3">

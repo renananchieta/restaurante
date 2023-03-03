@@ -20,11 +20,11 @@ class Pedido extends Model
 
     public function pedidoItens()
     {
-        return $this->hasMany(PedidoItem::class, 'fk_pedido');
+        return $this->hasMany(PedidoItem::class, 'fk_pedido', 'id');
     }
 
     public function cliente()
     {
-        return $this->hasOne(Cliente::class, 'id','fk_identificacao_cliente');
+        return $this->hasOne(Cliente::class, 'identificacao', 'identificacao_cliente');
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('data');
             $table->string('mesa');
             $table->string('status');
-            $table->foreignId('fk_identificacao_cliente')->constrained('cliente');
+            $table->foreignId('identificacao_cliente')->constrained('cliente');
             $table->timestamps();
         });
     }
