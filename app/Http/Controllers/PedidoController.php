@@ -40,16 +40,45 @@ class PedidoController extends Controller
     public function store(Request $request)
     {
         try{
+            //$saldo = Cliente::where('identificacao', $request->identificacao)->first()->saldo;
 
+            //UM ARRAY QUE EXIBE O SALDO DO CLIENTE
+            $saldo = DB::table("cliente as cl")
+                        ->where("cl.identificacao", "=", $request->identificacao)
+                        ->first(['saldo']);
+
+//------------------------------------------------------------------------------------------------------------------------                        
+            //teste com a dica do renato
+            $totalPedido = 0;
+
+            foreach($request->itemPedido as $i => $id_cardapio){
+                $cardapio = Cardapio::find($id_cardapio);
+                $totalPedido = $totalPedido + ($request->quantidade[$i]*$cardapio->valor);
+            }
+            //fim teste           
+                        
+//------------------------------------------------------------------------------------------------------------------------            
+            
+            //VERIFICA O VALOR TOTAL DO PEDIDO
+            $valorTotal = DB::table("pedido_itens as pi")
+                            ->join("pedido as pe", "pe.id", "=","pi.fk_pedido")
+                            ->where("pe.identificacao_cliente","=",$request->identificacao)
+                            ->sum('valor_total');
+
+            $saldoCliente = $saldo->saldo;
+            
+            if($saldoCliente < $totalPedido){
+                throw new Exception(' Saldo insuficiente.');
+            }
+                        
 
             $pedido = new Pedido();
             $pedido->data = date('Y-m-d');
             $pedido->mesa = $request->mesa;
-            $pedido->status = 'PENDENTE'; //pendente
+            $pedido->status = 'PENDENTE';
             $pedido->identificacao_cliente = $request->identificacao;
             $pedido->created_at = date('Y-m-d H:i:s');
             $pedido->save();
-
 
             foreach($request->itemPedido as $i => $id_cardapio) {
 
@@ -60,7 +89,7 @@ class PedidoController extends Controller
                     $pedidoItem->fk_cardapio = $id_cardapio;
                     $pedidoItem->quantidade = $request->quantidade[$i];
                     $pedidoItem->valor_unitario = $cardapio->valor;
-                    $pedidoItem->valor_total = 200;
+                    $pedidoItem->valor_total = $request->quantidade[$i]*$cardapio->valor;
                     $pedidoItem->save();
             }
 
@@ -96,7 +125,6 @@ class PedidoController extends Controller
     public function visualizar($id)
     {
         $pedido = Pedido::find($id);
-
 
         //dd($pedido->status);
 
@@ -135,6 +163,7 @@ class PedidoController extends Controller
 
     public function encerrarContaDetalhes($identificacao)
     {
+        
         $cliente = Cliente::where('identificacao', $identificacao)->first();
 
         $itensDoPedido = DB::table("pedido_itens as pi")
@@ -145,14 +174,17 @@ class PedidoController extends Controller
                             ->where("pe.identificacao_cliente","=", $identificacao)
                             ->select([
                                 'pe.id as id_pedido',
+                                'pe.identificacao_cliente as identificacao_pedido',
                                 DB::raw("UPPER(p.nome) as produto"),
                                 'pi.quantidade as qtd',
                                 'c.valor as valor',
-                                'pe.created_at as data'
+                                'pe.created_at as data',
+                                'pi.valor_total as valorTotal'
                             ])
                             ->orderBy('p.nome')
                             ->get();
 
         return view('pedido.encerrarcontaitens', compact('itensDoPedido', 'cliente'));
     }
+
 }

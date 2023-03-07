@@ -7,6 +7,10 @@
 @section('conteudo')
 
     <h1>ENCERRAR CONTA</h1>
+
+    @if(session('error'))
+        session('error')
+    @endif
     
         <div class="col-5 mb-3">
             <label>Nº de Identificação:</label>

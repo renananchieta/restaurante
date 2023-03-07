@@ -30,6 +30,7 @@ class ClienteController extends Controller
             $cliente->nome = $request->nome;
             $cliente->telefone = $request->telefone;
             $cliente->identificacao = $request->identificacao;
+            $cliente->saldo = $request->saldo;
             $cliente->save();
 
             return redirect('clientes')->with('mensagem', 'Cliente cadastrado com sucesso!');
@@ -52,6 +53,7 @@ class ClienteController extends Controller
             $cliente->nome = $request->nome;
             $cliente->telefone = $request->telefone;
             $cliente->identificacao = $request->identificacao;
+            $cliente->saldo = $request->saldo;
             $cliente->save();
 
             return redirect('clientes')->with('mensagem', 'Cliente alterado com sucesso.');

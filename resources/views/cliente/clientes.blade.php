@@ -27,6 +27,7 @@
                 <th>CLIENTE</th>
                 <th>TELEFONE</th>
                 <th>IDENTIFICAÇÃO</th>
+                <th>SALDO</th>
                 <th width="15%">AÇÕES</th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@
                 <td>{{$cliente->nome}}</td>
                 <td>{{$cliente->telefone}}</td>
                 <td>{{$cliente->identificacao}}</td>
+                <td>R$ {{$cliente->saldo}}</td>
                 <td>
                     <a href="{{url('cliente')}}/{{ $cliente->id }}" class="btn btn-warning">Editar</a>
                 </td>

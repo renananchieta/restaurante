@@ -18,7 +18,7 @@ INICIAR PEDIDO
         </div>
         <div class="col-2">
             <label>Identificação:</label>
-            <input type="text" name="identificacao" class="form-control" />
+            <input type="text" name="identificacao" id="identificacao" class="form-control" />
         </div>
     </div>
     <div class="row mb-3">

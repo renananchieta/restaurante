@@ -46,13 +46,6 @@
             </tr>
             @endforeach
         </tbody>
-        <script>
-            function deletar(event, form){
-                if(confirm('Deseja Realmente remover pedido?')){
-                    form.submit();
-                }
-            }
-        </script>
     </table>
 
 @endsection
