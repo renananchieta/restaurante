@@ -17,7 +17,7 @@
             <input type="text" class="form-control" id="identificacao" name="identificacao" placeholder="Ex: 123">
         </div>
         <div class="mb-3">
-            <button type="button" onclick="encerrarConta()" class="btn btn-primary">Prosseguir</button>
+            <button type="button" onclick="encerrarConta()" class="btn btn-danger">ENCERRAR CONTA</button>
         </div>
 
 <script>

@@ -16,9 +16,6 @@
 
     Cliente: {{$cliente->nome}} <br>
     
-
-<a href="#" class="btn btn-danger">ENCERRAR CONTA</a>
-
 <table class="table table-success table-hover mt-2">
     <thead>
         <tr>
@@ -26,7 +23,7 @@
             <th>Qtd</th>
             <th>Itens</th>
             <th>Valor Unitário</th>
-            <th>Valor por quantidade</th>
+            <th>Valor Total</th>
             <th>Data</th>
         </tr>
     </thead>
@@ -34,13 +31,16 @@
         @foreach($itensDoPedido as $itens)
         <tr>
             <td>{{$itens->id_pedido}}</td>
-            <td>{{$itens->qtd}}</td>
+            <td>{{$itens->quantidade}}</td>
             <td>{{$itens->produto}}</td>
-            <td>{{number_format($itens->valor, 2,',','.')}}</td>
-            <td>{{number_format($itens->valorTotal, 2,',','.')}}</td>
+            <td>R$ {{number_format($itens->valor, 2,',','.')}}</td>
+            <td>R$ {{number_format($itens->valorTotal, 2,',','.')}}</td>
             <td>{{$itens->data}}</td>
         </tr>
         @endforeach
+        <tr>
+            <td><b>TOTAL A PAGAR:</b>  R$ {{number_format($totalPagar,2,',','.')}}</td>
+        </tr>
     </tbody>
 </table>
 
