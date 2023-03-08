@@ -37,6 +37,10 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{url('encerrarconta')}}">Encerrar conta</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{url('transferircredito')}}">Transferência de crédito</a>
+                    </li>
                 </ul>
             </div>
         </div>

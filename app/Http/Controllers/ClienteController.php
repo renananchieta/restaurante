@@ -62,4 +62,9 @@ class ClienteController extends Controller
         }
     }
 
+    public function visualizar()
+    {
+        return view('cliente.transferirCredito');
+    }
+
 }

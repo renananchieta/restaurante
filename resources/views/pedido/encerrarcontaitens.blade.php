@@ -39,7 +39,7 @@
         </tr>
         @endforeach
         <tr>
-            <td><b>TOTAL A PAGAR:</b>  R$ {{number_format($totalPagar,2,',','.')}}</td>
+            <td><b>TOTAL CONSUMIDO:</b>  R$ {{number_format($totalPagar,2,',','.')}}</td>
         </tr>
     </tbody>
 </table>

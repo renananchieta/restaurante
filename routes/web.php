@@ -19,6 +19,10 @@ Route::post('/cliente/store', [ClienteController::class, 'store']);
 Route::get('/cliente/{id}', [ClienteController::class, 'show']);
 Route::post('/cliente/update', [ClienteController::class, 'update']);
 
+//TRANSFERIR CRÉDITO ENTRE USUÁRIOS
+Route::get('/transferircredito',[ClienteController::class, 'visualizar']);
+Route::post('/transferircredito/concluir', [ClienteController::class , 'concluirTransferencia']);
+
 
 //CATEGORIAS
 Route::get('/categorias', [CategoriaController::class, 'index']);

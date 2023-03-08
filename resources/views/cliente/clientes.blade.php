@@ -8,7 +8,8 @@
 
     <h1>CLIENTES</h1>
 
-    <a href="{{url('cliente/create')}}" class="btn btn-primary mb-2">Cadastrar</a>
+    <a href="{{ url('/cliente/create') }}" class="btn btn-primary mb-2">Cadastrar</a>
+    <a href="{{ url('/transferircredito') }}" class="btn btn-success mb-2">Transferir crédito</a>
 
     @if(session('mensagem'))
         <div class="alert alert-success">

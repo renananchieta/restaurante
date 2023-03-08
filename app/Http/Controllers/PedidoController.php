@@ -41,37 +41,31 @@ class PedidoController extends Controller
     {
         try {
             //$saldo = Cliente::where('identificacao', $request->identificacao)->first()->saldo;
-            //UM ARRAY QUE EXIBE O SALDO DO CLIENTE
-            $saldo = DB::table("cliente as cl")
+            //GUARDA O SALDO DO CLIENTE
+            $cliente = DB::table("cliente as cl")
                         ->where("cl.identificacao", "=", $request->identificacao)
                         ->first(['saldo']);
 
             //------------------------------------------------------------------------------------------------------------------------                        
             //Renato: CALCULA O VALOR DO PEDIDO ANTES DE SALVAR.
-            $totalPedido = 0;
+            $valorTotalPedido = 0;
 
             foreach ($request->itemPedido as $i => $id_cardapio) {
                 $cardapio = Cardapio::find($id_cardapio);
-                $totalPedido = $totalPedido + ($request->quantidade[$i] * $cardapio->valor);
+                $valorTotalPedido = $valorTotalPedido + ($request->quantidade[$i] * $cardapio->valor);
             }
 
             //------------------------------------------------------------------------------------------------------------------------            
 
-            //VERIFICA O VALOR TOTAL DO PEDIDO
-            $valorTotal = DB::table("pedido_itens as pi")
-                             ->join("pedido as pe", "pe.id", "=", "pi.fk_pedido")
-                             ->where("pe.identificacao_cliente", "=", $request->identificacao)
-                             ->sum('valor_total');
-
-            $saldoCliente = $saldo->saldo;
+            $saldoCliente = $cliente->saldo;
             
-            if ($saldoCliente < $totalPedido) {                                         // SALDO DO CLIENTE MENOR QUE O VALOR DO PEDIDO: NÃO SALVA O PEDIDO.
+            if ($saldoCliente < $valorTotalPedido) {                                         // SALDO DO CLIENTE MENOR QUE O VALOR DO PEDIDO: NÃO SALVA O PEDIDO.
                 throw new Exception(' Saldo insuficiente.');                            
-            } else if ($saldoCliente >= $totalPedido) {                                 // SALDO DO CLIENTE MAIOR OU IGUAL AO VALOR DO PEDIDO: SALVA O PEDIDO
+            } else if ($saldoCliente >= $valorTotalPedido) {                                 // SALDO DO CLIENTE MAIOR OU IGUAL AO VALOR DO PEDIDO: SALVA O PEDIDO
 
-                $cliente = DB::table("cliente as cl")                                   // SUBTRAI DO SALDO DO CLIENTE O VALOR TOTAL DO PEDIDO. SALVA O NOVO SALDO.
+                $cliente = DB::table("cliente as cl")                                        // SUBTRAI DO SALDO DO CLIENTE O VALOR TOTAL DO PEDIDO. SALVA O NOVO SALDO.
                                 ->where("cl.identificacao","=",$request->identificacao)
-                                ->decrement('saldo',$totalPedido);
+                                ->decrement('saldo',$valorTotalPedido);
 
                 $pedido = new Pedido();
                 $pedido->data = date('Y-m-d');
