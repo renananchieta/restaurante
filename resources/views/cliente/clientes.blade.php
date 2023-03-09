@@ -23,7 +23,7 @@
     @endif
 
     <table class="table table-success table-hover">
-        <thead>
+        <thead class="table-dark">
             <tr>
                 <th>CLIENTE</th>
                 <th>TELEFONE</th>

@@ -22,7 +22,7 @@
     @endif
 
     <table class="table table-success table-hover">
-        <thead>
+        <thead class="table-dark">
             <tr>
                 <th width="5%">ID</th>
                 <th>DATA</th>

@@ -10,7 +10,7 @@
 
     <style>
         body{
-            background-image: url("https://img.pikbest.com/backgrounds/20190711/simple-dark-green-gradient-banner-background_1898239.jpg!bw700");
+            background-image: url("https://media.istockphoto.com/id/844423544/pt/foto/gradient-green-and-white-background.jpg?s=170667a&w=0&k=20&c=g0dUj1NkejxIvEk2w-yUd0fazRFicXL_K2ui0V1Ysn4=");
             background-repeat: no-repeat;
             background-size: cover;
         }

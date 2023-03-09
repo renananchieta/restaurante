@@ -79,13 +79,6 @@ class ClienteController extends Controller
 
             $saldoClienteOrigem = $clienteOrigem->saldo;
 
-            // CLIENTE QUE RECEBE O VALOR INSERIDO:
-            $clienteDestino = DB::table("cliente as cl")
-                                ->where("cl.identificacao","=", $request->identificacaoDestino)
-                                ->first(['saldo']);
-            
-            $saldoClienteDestino = $clienteDestino->saldo;
-
             //VALOR A SER TRANSFERIDO:
             $valorDaTransferencia = $request->valorDaTransferencia;
 
@@ -93,11 +86,11 @@ class ClienteController extends Controller
                 throw new Exception(' Saldo Insuficiente.');
             } else {
 
-                $clienteOrigem = DB::table("cliente as cl")
+                $cliente = DB::table("cliente as cl")
                                     ->where("cl.identificacao","=", $request->identificacaoOrigem)
                                     ->decrement('saldo', $valorDaTransferencia);
 
-                $clienteDestino = DB::table("cliente as cl")
+                $cliente = DB::table("cliente as cl")
                                      ->where("cl.identificacao", "=", $request->identificacaoDestino)
                                      ->increment('saldo',$valorDaTransferencia);
             }
