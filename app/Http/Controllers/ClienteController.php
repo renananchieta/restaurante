@@ -64,7 +64,51 @@ class ClienteController extends Controller
 
     public function visualizar()
     {
-        return view('cliente.transferirCredito');
+        $clientes = Cliente::all();
+
+        return view('cliente.transferirCredito', compact('clientes'));
+    }
+
+    public function concluirTransferencia(Request $request)
+    {
+        try{
+            // CLIENTE QUE TRANSFERE O VALOR INSERIDO: 
+            $clienteOrigem = DB::table("cliente as cl")
+                                ->where("cl.identificacao","=", $request->identificacaoOrigem)
+                                ->first(['saldo']);
+
+            $saldoClienteOrigem = $clienteOrigem->saldo;
+
+            // CLIENTE QUE RECEBE O VALOR INSERIDO:
+            $clienteDestino = DB::table("cliente as cl")
+                                ->where("cl.identificacao","=", $request->identificacaoDestino)
+                                ->first(['saldo']);
+            
+            $saldoClienteDestino = $clienteDestino->saldo;
+
+            //VALOR A SER TRANSFERIDO:
+            $valorDaTransferencia = $request->valorDaTransferencia;
+
+            if ($saldoClienteOrigem < $valorDaTransferencia){
+                throw new Exception(' Saldo Insuficiente.');
+            } else {
+
+                $clienteOrigem = DB::table("cliente as cl")
+                                    ->where("cl.identificacao","=", $request->identificacaoOrigem)
+                                    ->decrement('saldo', $valorDaTransferencia);
+
+                $clienteDestino = DB::table("cliente as cl")
+                                     ->where("cl.identificacao", "=", $request->identificacaoDestino)
+                                     ->increment('saldo',$valorDaTransferencia);
+            }
+
+            return redirect('clientes')->with('mensagem','Transferência concluída com sucesso.');
+        } catch(Exception $ex){
+            return redirect('transferircredito')->with('error', 'Erro ao realizar a transferência.'. $ex->getMessage());
+        }
+
+        
+
     }
 
 }

@@ -8,6 +8,12 @@ INICIAR PEDIDO
 
 <h1>INICIAR PEDIDO</h1>
 
+@if(session('error'))
+<div class="alert alert-danger">
+    {{session('error')}}
+</div>
+@endif
+
 <form action="{{url('pedido/store')}}" method="post">
     @csrf
 

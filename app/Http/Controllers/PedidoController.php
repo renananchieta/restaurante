@@ -61,7 +61,7 @@ class PedidoController extends Controller
             
             if ($saldoCliente < $valorTotalPedido) {                                         // SALDO DO CLIENTE MENOR QUE O VALOR DO PEDIDO: NÃO SALVA O PEDIDO.
                 throw new Exception(' Saldo insuficiente.');                            
-            } else if ($saldoCliente >= $valorTotalPedido) {                                 // SALDO DO CLIENTE MAIOR OU IGUAL AO VALOR DO PEDIDO: SALVA O PEDIDO
+            } else {                                                                         // SALDO DO CLIENTE MAIOR OU IGUAL AO VALOR DO PEDIDO: SALVA O PEDIDO
 
                 $cliente = DB::table("cliente as cl")                                        // SUBTRAI DO SALDO DO CLIENTE O VALOR TOTAL DO PEDIDO. SALVA O NOVO SALDO.
                                 ->where("cl.identificacao","=",$request->identificacao)
@@ -94,7 +94,7 @@ class PedidoController extends Controller
 
             return redirect('pedidos')->with('mensagem', 'Pedido salvo com sucesso.');
         } catch (Exception $ex) {
-            return redirect('pedidos')->with('error', 'Erro ao salvar pedido.' . $ex->getMessage());
+            return redirect('pedido/create')->with('error', 'Erro ao salvar pedido.' . $ex->getMessage());
         }
     }
 
