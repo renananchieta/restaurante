@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cardapio;
 use App\Models\Cliente;
+use App\Models\Movimentacao;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use Exception;
@@ -44,7 +45,7 @@ class PedidoController extends Controller
             //GUARDA O SALDO DO CLIENTE
             $cliente = DB::table("cliente as cl")
                         ->where("cl.identificacao", "=", $request->identificacao)
-                        ->first(['saldo']);
+                        ->first(['id', 'saldo']);
 
             //------------------------------------------------------------------------------------------------------------------------                        
             //Renato: CALCULA O VALOR DO PEDIDO ANTES DE SALVAR.
@@ -63,9 +64,10 @@ class PedidoController extends Controller
                 throw new Exception(' Saldo insuficiente.');                            
             } else {                                                                         // SALDO DO CLIENTE MAIOR OU IGUAL AO VALOR DO PEDIDO: SALVA O PEDIDO
 
-                $cliente = DB::table("cliente as cl")                                        // SUBTRAI DO SALDO DO CLIENTE O VALOR TOTAL DO PEDIDO. SALVA O NOVO SALDO.
-                                ->where("cl.identificacao","=",$request->identificacao)
-                                ->decrement('saldo',$valorTotalPedido);
+                //Decrementa o saldo do cliente
+                DB::table("cliente as cl")                                        // SUBTRAI DO SALDO DO CLIENTE O VALOR TOTAL DO PEDIDO. SALVA O NOVO SALDO.
+                    ->where("cl.identificacao","=",$request->identificacao)
+                    ->decrement('saldo',$valorTotalPedido);
 
                 $pedido = new Pedido();
                 $pedido->data = date('Y-m-d');
@@ -88,8 +90,16 @@ class PedidoController extends Controller
                     $pedidoItem->save();
                 }
 
-            }
+                //MOVIMENTAÇÃO DE ENTRADA: CADASTRO DE USUÁRIO COM UM SALDO INICIAL
+                $extrato = new Movimentacao();
+                $extrato->fk_cliente = $cliente->id;
+                $extrato->valor = $valorTotalPedido;
+                $extrato->fk_tipo_movimentacao = 2;
+                $extrato->data = date('Y-m-d H:i:s');
+                $extrato->observacao = 'Referente a venda nº '.$pedido->id;
+                $extrato->save();
 
+            }
 
 
             return redirect('pedidos')->with('mensagem', 'Pedido salvo com sucesso.');

@@ -29,7 +29,7 @@
                 <th>TELEFONE</th>
                 <th>IDENTIFICAÇÃO</th>
                 <th>SALDO</th>
-                <th width="15%">AÇÕES</th>
+                <th colspan="2" width="15%">AÇÕES</th>
             </tr>
         </thead>
         <tbody>
@@ -41,6 +41,9 @@
                 <td>R$ {{$cliente->saldo}}</td>
                 <td>
                     <a href="{{url('cliente')}}/{{ $cliente->id }}" class="btn btn-warning">Editar</a>
+                </td>
+                <td>
+                    <a href="{{url('cliente/extrato')}}/{{$cliente->id}}" class="btn btn-primary">Extrato</a>
                 </td>
             </tr>
             @endforeach

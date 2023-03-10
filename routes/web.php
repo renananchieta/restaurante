@@ -21,7 +21,10 @@ Route::post('/cliente/update', [ClienteController::class, 'update']);
 
 //TRANSFERIR CRÉDITO ENTRE USUÁRIOS
 Route::get('/transferircredito',[ClienteController::class, 'visualizar']);
-Route::post('/transferircredito/concluir', [ClienteController::class , 'concluirTransferencia']);
+Route::post('/transferircredito/concluir', [ClienteController::class, 'concluirTransferencia']);
+
+//EXTRATO DO CLIENTE
+Route::get('/cliente/extrato/{id}', [ClienteController::class, 'extrato']);
 
 
 //CATEGORIAS
